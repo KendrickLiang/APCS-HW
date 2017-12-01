@@ -11,10 +11,10 @@
  * comparison
  ******************************/
 
-// Clyde "Thluffy" Sinclair
-// APCS1 p0
+// Aleksandra Koroza, Kendrick Liang
+// APCS1 p8
 // HW44 -- implementing an interface, boolean short-circuiting
-// 2017-12-01f
+// 2017-11-30
 
 public class Rational implements Comparable{
   //   Instance variables for the numerator and denominator
@@ -180,6 +180,7 @@ public class Rational implements Comparable{
       Rational t = new Rational( 8, 5 );
 
       Rational u = new Rational( 1, 2 );
+      Object z = u;
       Rational v = new Rational( 2, 3 );
       Rational w = new Rational( 8, 12 );
 
@@ -256,9 +257,9 @@ public class Rational implements Comparable{
       System.out.println( "r > t: " +  r.compareTo(t) );
       System.out.println( "r > s: " +  r.compareTo(s) );
       System.out.println( "s > t: " +  s.compareTo(t) );
-      //uncommenting the line below should trigger a runtime error
-      //  System.out.println( "s > y: " +  s.compareTo(y) );
+      System.out.println( "s > y: " +  s.compareTo(y) );
 
+      System.out.println( "u.equals(z): " + u.equals(z) );
       System.out.println( "v.equals(v): " + v.equals(v) );
       System.out.println( "v.equals(w): " + v.equals(w) );
       System.out.println( "w.equals(x): " + w.equals(x) );
