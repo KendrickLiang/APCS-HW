@@ -141,8 +141,8 @@ public class Rational implements Comparable{
     //First, reduce both fractions.
     //...thus allowing for direct comparison of attributes
     reduce();
-    other.reduce();
-    return ((this._numerator == other._numerator && this._denominator == other._denominator) || (this == other));
+    ((Rational)other).reduce();
+    return ((this._numerator == ((Rational)other)._numerator && this._denominator == ((Rational)other)._denominator) || (this == ((Rational)other)));
   }//end equals()
 
 
@@ -159,14 +159,16 @@ public class Rational implements Comparable{
     // This will exit the function, generating a runtime error
 
       if (!(other instanceof Rational))
-	  throw new Exception("Invalid Object.");
-      if (this.equals(other))
-	  return 0;
+	  throw new ClassCastException("Invalid Object.");
       else{
-	  if (this._numerator * other._denominator < this._denominator * other._numerator)
-	      return -1;
-	  else
-	      return 1;
+	  if (this.equals(((Rational)other)))
+	      return 0;
+	  else{
+	      if (this._numerator * ((Rational)other)._denominator < this._denominator * ((Rational)other)._numerator)
+		  return -1;
+	      else
+		  return 1;
+	  }
       }
   }
 
