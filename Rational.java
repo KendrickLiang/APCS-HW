@@ -142,7 +142,7 @@ public class Rational implements Comparable{
     //...thus allowing for direct comparison of attributes
     reduce();
     ((Rational)other).reduce();
-    return ((this._numerator == ((Rational)other)._numerator && this._denominator == ((Rational)other)._denominator) || (this == ((Rational)other)));
+    return ((this == ((Rational)other)) || (this._numerator == ((Rational)other)._numerator && this._denominator == ((Rational)other)._denominator ));
   }//end equals()
 
 
