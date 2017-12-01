@@ -11,7 +11,7 @@
  * comparison
  ******************************/
 
-// Aleksandra Koroza, Kendrick Liang
+// Team PopupTarts: Aleksandra Koroza, Kendrick Liang
 // APCS1 p8
 // HW44 -- implementing an interface, boolean short-circuiting
 // 2017-11-30
@@ -190,6 +190,8 @@ public class Rational implements Comparable{
       System.out.println("r: " + r );
       System.out.println("s: " +  s );
       System.out.println("t: " +  t );
+      System.out.println("u: " +  u );
+      System.out.println("z: " +  z );
 
       System.out.println( r + " as a floating pt approximation: "
       + r.floatValue() );
@@ -257,7 +259,7 @@ public class Rational implements Comparable{
       System.out.println( "r > t: " +  r.compareTo(t) );
       System.out.println( "r > s: " +  r.compareTo(s) );
       System.out.println( "s > t: " +  s.compareTo(t) );
-      System.out.println( "s > y: " +  s.compareTo(y) );
+      //System.out.println( "s > y: " +  s.compareTo(y) );
 
       System.out.println( "u.equals(z): " + u.equals(z) );
       System.out.println( "v.equals(v): " + v.equals(v) );
