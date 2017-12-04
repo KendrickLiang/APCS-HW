@@ -1,11 +1,10 @@
 // Kendrick Liang
 // APCS1 pd8
-// HW43 -- adhering to a published standard (implementing an interface)
-// 2017-11-29
+// HW45 -- In America, the Driver Sits on the Left
+// 2017-12-3
 
 /***************************
  * class SuperArray version 3.0
- * ( SKELETON )
  * Wrapper class for array. Facilitates resizing,
  * resizing
  * expansion
@@ -15,18 +14,17 @@
  * removing an element at specified index
  *
  * ...and now SuperArray complies with the specifications of the
- * ListInt interface. (ListInt.java must be in same dir as this file)
+ * List interface. (ListInt.java must be in same dir as this file)
  ***************************/
 
-public class SuperArray implements ListInt{
-    
-    private int[] _data;  //underlying container
+public class SuperArray extends java.lang.Object implements List{
+    private Object[] _data;  //underlying container
     private int _size;    //number of elements in this SuperArray
     
     
     //default constructor – initializes 10-item array
     public SuperArray(){
-	_data = new int[10];
+	_data = new Object[10];
 	_size = 0;
     }
     
@@ -47,7 +45,7 @@ public class SuperArray implements ListInt{
     
     //double capacity of SuperArray
     private void expand(){
-	int[] temp = new int[ _data.length * 2 ];
+	Object[] temp = new Object[ _data.length * 2 ];
 	for( int i = 0; i < _data.length; i++ )
 	    temp[i] = _data[i];
 	_data = temp;
@@ -55,29 +53,35 @@ public class SuperArray implements ListInt{
     
     
     //accessor -- return value at specified index
-    public int get( int index ){
+    public Object get( int index ){
+	if (index < 0 || index > size())
+	    throw new ArrayIndexOutOfBoundsException("Index out of bounds."); 
 	return _data[index];
     }
     
     
     //mutator -- set value at index to newVal,
     //           return old value at index
-    public int set( int index, int newVal ){
-	int temp = _data[index];
+    public Object set( int index, Object newVal ){
+	if (index < 0 || index > size())
+	    throw new ArrayIndexOutOfBoundsException("Index out of bounds."); 
+	Object temp = _data[index];
 	_data[index] = newVal;
 	return temp;
     }
     
     
     //adds an item after the last item
-    public boolean add( int newVal ){
+    public boolean add( Object newVal ){
 	add( _size, newVal );
 	return true;
     }
     
     
     //inserts an item at index
-    public void add( int index, int newVal ){
+    public void add( int index, Object newVal ){
+	if (index < 0 || index > size())
+	    throw new ArrayIndexOutOfBoundsException("Index out of bounds."); 
 	//first expand if necessary
 	if ( _size >= _data.length )
 	    expand();
@@ -91,13 +95,16 @@ public class SuperArray implements ListInt{
     
     //removes the item at index
     //shifts elements left to fill in newly-empted slot
-    public int remove( int index ){
-	int oldInt = _data[index];
+    //returns removed value
+    public Object remove( int index ){
+	if (index < 0 || index > size())
+	    throw new ArrayIndexOutOfBoundsException("Index out of bounds."); 
+	Object retObj = _data[index];
 	for( int i = index; i < _size - 1; i++ ) {
 	    _data[i] = _data[i+1];
 	}
 	_size--;
-	return oldInt;
+	return retObj;
     }
     
     
@@ -107,26 +114,27 @@ public class SuperArray implements ListInt{
     }
     
     
-    
+
     //main method for testing
-    public static void main( String[] args ){
-	ListInt mayfield = new SuperArray();
+    public static void main( String[] args )
+    {
+	List mayfield = new SuperArray();
 	System.out.println("Printing empty SuperArray mayfield...");
 	System.out.println(mayfield);
 	
-	System.out.println(mayfield.add(5));
-	System.out.println(mayfield.add(4));
-	System.out.println(mayfield.add(3));
-	System.out.println(mayfield.add(2));
-	System.out.println(mayfield.add(1));
+	mayfield.add(5);
+	mayfield.add(4);
+	mayfield.add(3);
+	mayfield.add(2);
+	mayfield.add(1);
 	
 	System.out.println("Printing populated SuperArray mayfield...");
 	System.out.println(mayfield);
 	
-	System.out.println(mayfield.remove(3));
+	mayfield.remove(3);
 	System.out.println("Printing SuperArray mayfield post-remove...");
 	System.out.println(mayfield);
-	System.out.println(mayfield.remove(3));
+	mayfield.remove(3);
 	System.out.println("Printing SuperArray mayfield post-remove...");
 	System.out.println(mayfield);
 	
@@ -139,6 +147,8 @@ public class SuperArray implements ListInt{
 	mayfield.add(1,77);
 	System.out.println("Printing SuperArray mayfield post-insert...");
 	System.out.println(mayfield);
+	/*~~~~~~~~move~me~down~~~~~~~~~~~~~~V~~~~~~~~
+	  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~*/
     }//end main()
     
     
