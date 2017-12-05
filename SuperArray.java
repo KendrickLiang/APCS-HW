@@ -1,4 +1,4 @@
-// Kendrick Liang
+﻿// Kendrick Liang
 // APCS1 pd8
 // HW45 -- In America, the Driver Sits on the Left
 // 2017-12-3
@@ -14,7 +14,7 @@
  * removing an element at specified index
  *
  * ...and now SuperArray complies with the specifications of the
- * List interface. (ListInt.java must be in same dir as this file)
+ * List interface. (List.java must be in same dir as this file)
  ***************************/
 
 public class SuperArray extends java.lang.Object implements List{
