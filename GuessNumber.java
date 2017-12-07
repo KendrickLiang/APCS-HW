@@ -1,3 +1,9 @@
+/*
+Kendrick Liang
+APCS1 pd8
+HW48 -- Keep Guessing
+2017-12-6
+*/
 /*==================================================
   class GuessNumber -- fun fun fun!
 
@@ -26,7 +32,10 @@ public class GuessNumber
       ==================================================*/
     public GuessNumber( int a, int b ) 
     {
-	/* YOUR IMPLEMENTATION HERE */
+	_lo = a;
+	_hi = b;
+	_guessCtr = 1;
+	_target = ((int)(Math.random() * (_hi - _lo))) + _lo;
     }
 
 
@@ -36,9 +45,30 @@ public class GuessNumber
       pre:  
       post: 
       ==================================================*/
-    public void playRec() 
+    public void playRec()
     {
-	/* YOUR IMPLEMENTATION HERE */
+	System.out.println("Guess a number from " + _lo + "-" + _hi + ":");
+	int _guess = Keyboard.readInt();
+	if (_guess == _target){
+	    System.out.println("Correct! It took " + _guessCtr + " guesses");
+	    return;
+	}
+	else{
+	    if (_guess > _hi || _guess < _lo)
+		System.out.println("Invalid input. Please try again.");
+	    else{
+		if (_guess < _target){
+		    System.out.println("Too low");
+		    _lo = _guess + 1;
+		}
+		else{
+		    System.out.println("Too high");
+		    _hi = _guess - 1;
+		}
+		_guessCtr += 1;
+	    }
+	    playRec();
+	}
     }
 
 
@@ -50,7 +80,27 @@ public class GuessNumber
       ==================================================*/
     public void playIter() 
     {
-	/* YOUR IMPLEMENTATION HERE */
+	
+	System.out.println("Guess a number from " + _lo + "-" + _hi + ":");
+	int _guess = Keyboard.readInt();
+	while (_guess != _target){
+	    if (_guess > _hi || _guess < _lo)
+		System.out.println("Invalid input. Please try again.");
+	    else{
+		if (_guess < _target){
+		    System.out.println("Too low");
+		    _lo = _guess + 1;
+		}
+		else{
+		    System.out.println("Too high");
+		    _hi = _guess - 1;
+		}
+		_guessCtr += 1;
+	    }
+	    System.out.println("Guess a number from " + _lo + "-" + _hi + ":");
+	    _guess = Keyboard.readInt();
+	}
+	System.out.println("Correct! It took " + _guessCtr + " guesses");
     }
 
 
@@ -58,21 +108,19 @@ public class GuessNumber
     public void play() 
     { 
 	//use one or the other below:
-	//playRec();
-	playIter();
+	playRec();
+	//playIter();
     }
 
 
     //main method to run it all
     public static void main( String[] args ) 
     {
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//instantiate a new game
 	GuessNumber g = new GuessNumber(1,100);
 
 	//start the game
 	g.play();
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     }//end main
 
 }//end class
