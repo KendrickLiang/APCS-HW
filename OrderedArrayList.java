@@ -1,3 +1,9 @@
+/*
+Kendrick Liang
+APCS1 pd8
+hw49 -- Halving the Halves
+2017-12-07
+*/
 /********************************
  * class OrderedArrayList
  * wrapper class for ArrayList.
@@ -56,16 +62,36 @@ public class OrderedArrayList
   public void add( Comparable newVal )
   { 
     for( int p = 0; p < _data.size(); p++ ) {
-	    if ( newVal.compareTo( _data.get(p) ) < 0 ) { 
-        //newVal < oal[p]
+	    if ( newVal.compareTo( _data.get(p) ) < 0 ) {
         _data.add( p, newVal );
-        return; //Q:why not break?
+        return;
 	    }
     }
     _data.add( newVal ); //newVal > every item in oal, so add to end 
   }
-
-
+    
+    /*addBin takes a new element as an argument,
+      sets up a range based on the size of the OrderedArrayList,
+      and compares the new element to the elements in the middle
+      of the OrderedArrayList. If it doesn't fit, addBin will keep
+      narrowing the range and adjusting the middle value until a
+      fitting position is found.
+     */
+    public int addBin(Comparable newVal){
+	int lo = 0;
+	int hi = size() - 1;
+	int mid = lo + (hi - 1)/2;
+	while (newVal.compareTo(_data.get(mid)) <= 0 || newVal.compareTo(_data.get(mid + 1)) >= 0){
+	    if (newVal.compareTo(_data.get(mid)) < 0)
+		hi = mid - 1;
+	    else
+		lo = mid + 1;
+	    mid = lo + (hi - 1)/2;
+	}
+	return mid + 1;
+    }
+		
+	    
 
   // main method solely for testing purposes
   public static void main( String[] args )
@@ -86,8 +112,7 @@ public class OrderedArrayList
         break;
       }
     }
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    System.out.println("New element 25 can be found at index " + Franz.addBin(25));
   }//end main()
 
 }//end class OrderedArrayList
