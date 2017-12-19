@@ -1,9 +1,3 @@
-/*
-Kendrick Liang
-APCS1 pd8
-hw49 -- Halving the Halves
-2017-12-07
-*/
 /********************************
  * class OrderedArrayList
  * wrapper class for ArrayList.
@@ -58,40 +52,56 @@ public class OrderedArrayList
    * inserts newVal at the appropriate index
    * maintains ascending order of elements
    * uses a linear search to find appropriate index
+   * best case: newVal can be inserted at beginning (would only run one time, meaning O(1))
+   * worst case: newVal has to be inserted at end (would run n times to reach end, meaning O(n))
    ***/
   public void add( Comparable newVal )
   { 
-    for( int p = 0; p < _data.size(); p++ ) {
-	    if ( newVal.compareTo( _data.get(p) ) < 0 ) {
+      for( int p = 0; p < _data.size(); p++ ) { //runs/searches n times through each index until suitable position is found
+	    if ( newVal.compareTo( _data.get(p) ) < 0 ) { 
+        //newVal < oal[p]
         _data.add( p, newVal );
-        return;
+        return; //Q:why not break?
 	    }
     }
     _data.add( newVal ); //newVal > every item in oal, so add to end 
   }
-    
-    /*addBin takes a new element as an argument,
-      sets up a range based on the size of the OrderedArrayList,
-      and compares the new element to the elements in the middle
-      of the OrderedArrayList. If it doesn't fit, addBin will keep
-      narrowing the range and adjusting the middle value until a
-      fitting position is found.
-     */
-    public int addBin(Comparable newVal){
-	int lo = 0;
-	int hi = size() - 1;
-	int mid = lo + (hi - 1)/2;
-	while (newVal.compareTo(_data.get(mid)) <= 0 || newVal.compareTo(_data.get(mid + 1)) >= 0){
-	    if (newVal.compareTo(_data.get(mid)) < 0)
-		hi = mid - 1;
-	    else
-		lo = mid + 1;
-	    mid = lo + (hi - 1)/2;
-	}
-	return mid + 1;
+
+
+  /***
+   * addBin takes as input any comparable object 
+   * (i.e., any object of a class implementing interface Comparable)
+   * inserts newVal at the appropriate index
+   * maintains ascending order of elements
+   * uses a binary search to find appropriate index
+   * best case: newVal can be added in the middle (O(1) because it runs one time to place it the middle index where it starts from)
+   * worst case: newVal is at end or one index away from middle (addBin would have to keep halving the ArrayList until it found its value, so O(log2n))
+   ***/
+  public void addBin( Comparable newVal ) { 
+    //initialize upperbound, lowerbound and median
+    int lo = 0;
+    int med = 0;
+    int hi = _data.size()-1;
+
+    while ( lo <= hi ) { //running until target is found or bounds cross
+
+	med = (lo + hi) / 2; // divides by two everytime it runs
+	    int x = _data.get(med).compareTo( newVal );
+	        
+	    if ( x == 0 ) { //equal value found, insert here
+        _data.add( med, newVal );
+        return;
+	    }
+	    else if ( x > 0 ) //newVal < med, so look at lower half of data
+        hi = med - 1;
+	    else //newVal > med, so look at upper half of data
+        lo = med + 1;
     }
-		
-	    
+    // If you make it this far, newVal was not in the ArrayList.
+    // So insert at lo. Q: How do you know lo is correct insertion index?
+    _data.add( lo, newVal );
+  }	
+  
 
   // main method solely for testing purposes
   public static void main( String[] args )
@@ -101,6 +111,11 @@ public class OrderedArrayList
     // testing linear search
     for( int i = 0; i < 15; i++ )
       Franz.add( (int)( 50 * Math.random() ) );
+    System.out.println( Franz );
+    
+    // testing binary search
+    for( int i = 0; i < 15; i++ )
+      Franz.addBin( (int)( 50 * Math.random() ) );
     System.out.println( Franz );
 
     //check for sorted-ness
@@ -112,7 +127,6 @@ public class OrderedArrayList
         break;
       }
     }
-    System.out.println("New element 25 can be found at index " + Franz.addBin(25));
   }//end main()
 
 }//end class OrderedArrayList

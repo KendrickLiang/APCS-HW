@@ -1,3 +1,10 @@
+/*
+Clara Mohri, Kendrick Liang
+APCS1 pd8
+hw53 -- Solid Comparative Analysis
+2017-12-13
+*/
+
 import java.util.ArrayList;
 
 public class SortTester{
