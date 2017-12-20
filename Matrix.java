@@ -1,0 +1,174 @@
+/*
+Kendrick Liang
+APCS1 pd8
+HW57 -- How Deep Does the Rabbit Hole Go?
+2017-19-17
+*/
+/***
+ * class Matrix -- models a square matrix
+ *
+ * BACKGROUND:
+ * A matrix is a rectangular array.
+ * Its dimensions are numRows x numColumns.
+ * Each element is indexed as (row,column): 
+ *  eg,
+ *   for 2 x 3 matrix M:
+ *        -       -
+ *   M =  | a b c |
+ *        | d e f |
+ *        -       -
+ *   ... d is at position (2,1) or M[2,1] 
+ *
+ * TASK:
+ * Implement methods below, categorize runtime of each. 
+ * Test in main method.
+ ***/
+
+
+public class Matrix 
+{
+    //constant for default matrix size
+    private final static int DEFAULT_SIZE = 2;
+    
+    private Object[][] matrix;
+    
+    //default constructor intializes a DEFAULT_SIZE*DEFAULT_SIZE matrix
+    public Matrix( ) 
+    {
+	matrix = new Object[DEFAULT_SIZE][DEFAULT_SIZE];
+    }
+    
+    
+    //constructor intializes an a*a matrix
+    public Matrix( int a ) 
+    {
+	matrix = new Object[a][a];
+    }
+    
+    
+    //return size of this matrix, where size is 1 dimension
+    //returns once, so O(1)
+    private int size() 
+    {
+	return matrix.length;
+    }
+    
+    
+    //return the item at the specified row & column
+    //Only runs once, O(1)
+    private Object get( int r, int c ) 
+    {
+	return matrix[r - 1][c - 1];
+    }
+    
+    
+    //return true if this matrix is empty, false otherwise
+    //iterates through indices of n rows n times (one for each column), so O(n^2)
+    private boolean isEmpty() 
+    {
+	for (int x = 0; x < matrix.length; x++){
+	    for (int y = 0; y < matrix[x].length; y++){
+		if (matrix[x][y] != null)
+		    return false;
+	    }
+	}
+	return true;
+    }
+    
+    
+    //overwrite item at specified row and column with newVal
+    //return old value
+    //only does two operations to set. O(1)
+    private Object set( int r, int c, Object newVal ) 
+    {
+	Object oldVal = matrix[r - 1][c - 1];
+	matrix[r][c] = newVal;
+	return oldVal;
+    }
+    
+    
+    //return String representation of this matrix
+    // (make it look like a matrix)
+    // prints out n lines with n indices each. O(n^2)
+    public String toString() 
+    {
+	String retStr = "";
+	for (int x = 0; x < matrix.length; x++){
+	    for (int y = 0; y < matrix[x].length; y++){
+		retStr += matrix[x][y] + " ";
+	    }
+	    retStr += "\n";
+	}
+	return retStr;
+    }
+    
+    
+    //override inherited equals method
+    //criteria for equality: matrices have identical dimensions,
+    // and identical values in each slot
+    //best case: either rightSide isn't a Matrix or is of different size. O(1)
+    //worst case: rightSide is Matrix with same size, so checks whole Matrix for differences. O(n^2)
+    public boolean equals( Object rightSide ) 
+    {
+	boolean sameType = rightSide instanceof Matrix && this.size() == ((Matrix)rightSide).size();
+	boolean sameVal = true;
+	if (sameType){
+	    for (int x = 0; x < matrix.length; x++){
+		for (int y = 0; y < matrix[x].length; y++){
+		    if (!this.matrix[x][y].equals(((Matrix)rightSide).matrix[x][y]))
+			sameVal = false;
+		}
+	    }
+	}
+	return (sameType && sameVal);
+    }
+    
+    
+    //swap two columns of this matrix 
+    //(1,1) is top left corner of matrix
+    //row values increase going down
+    //column value increase L-to-R
+    //swaps two whole columns once. O(1)
+    public void swapColumns( int c1, int c2  ) 
+    {
+	Object[] oldCol = matrix[c1 - 1];
+	matrix[c1 - 1] = matrix[c2 - 1];
+	matrix[c2 - 1] = oldCol;
+    }
+    
+    
+    //swap two rows of this matrix 
+    //(1,1) is top left corner of matrix
+    //row values increase going down
+    //column value increase L-to-R
+    //iterates through each column to make n swaps. O(n)
+    public void swapRows( int r1, int r2  ) 
+    {
+	for (int x = 0; x < matrix.length; x++){
+	    Object oldRow = matrix[x][r1 - 1];
+	    matrix[x][r1 - 1] = matrix[x][r2 - 1];
+	    matrix[x][r2 - 1] = oldRow;
+	}
+    }
+    
+    
+    //main method for testing
+    public static void main( String[] args ) 
+    {
+	Matrix m = new Matrix(5);
+	Matrix n = new Matrix();
+	System.out.println(m.size());
+	System.out.println(m.isEmpty());
+	for (int x = 0; x < m.matrix.length; x++){
+	    for (int y = 0; y < m.matrix[x].length; y++)
+		m.matrix[x][y] = (x * y);
+	}
+	System.out.println(m);
+	System.out.println(m.equals(n));
+	m.set(3, 3, 9);
+	m.swapColumns(2, 4);
+	m.swapRows(2, 4);
+	System.out.println(m);
+    }
+    
+}//end class Matrix
